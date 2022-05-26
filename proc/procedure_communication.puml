@@ -1,0 +1,12 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+client ->  ProcedureExecutor :submit()
+ProcedureExecutor -> ProcedureExecutor:prepare()
+ProcedureExecutor -> ProcedureScheduler:push()
+ProcedureExecutor-->client: return proc id
+
+
+@enduml
+

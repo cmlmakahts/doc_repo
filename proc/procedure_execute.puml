@@ -1,0 +1,45 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+
+
+activate WorkerThread
+WorkerThread -> ProcedureScheduler: 1.取出任务
+ProcedureScheduler -> WorkerThread : 2.return proc
+WorkerThread -> ProcedureExecutor: 3.执行proc
+alt 4.1 proc已完成
+    return 退出
+else 4.2 proc进行中
+
+    loop 循环
+
+    alt 需要回滚
+        ProcedureExecutor -> ProcedureExecutor:5.1回滚proc, 结束
+    else
+        ProcedureExecutor -> ProcedureExecutor:5.2执行proc
+        alt proc成功
+            ProcedureExecutor -> ProcedureExecutor:6.1 清理proc, 结束
+        else
+            ProcedureExecutor -> ProcedureExecutor:6.2 进入循环，执行回滚
+
+    end
+    end
+end
+
+
+
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+@enduml

@@ -1,0 +1,17 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+Worker -> ProcedureScheduler: poll()
+ProcedureScheduler -> Worker: return proc
+activate Worker
+Worker -> ProcedureExecutor:execute(proc)
+ProcedureExecutor -> DataNode : request(proc)
+DataNode -> ProcedureExecutor : return response
+ProcedureExecutor -> ProcedureExecutor : update(proc)
+ProcedureExecutor -> ProcedureScheduler : addBack(proc)
+
+
+
+
+@enduml

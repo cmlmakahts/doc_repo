@@ -1,0 +1,28 @@
+@startuml
+'https://plantuml.com/state-diagram
+
+hide empty description
+
+[*] --> INITIALIZED : client.submit(procReq)
+
+INITIALIZED --> RUNNABLE : ProcedureStore:update(proc)
+
+state c <<choice>>
+
+RUNNABLE --> c
+
+c-->FAILED : updateOnExecution(proc)
+c-->WAITING:updateOnExecution(proc)
+c-->WAITING_TIMEOUT:store.update(proc)
+c-->SUCCESS:store.update(proc)
+c-->ROLLEDBACK:store.update(proc)
+
+
+WAITING_TIMEOUT-->[*]
+SUCCESS-->[*]
+ROLLEDBACK-->[*]
+
+
+
+
+@enduml
